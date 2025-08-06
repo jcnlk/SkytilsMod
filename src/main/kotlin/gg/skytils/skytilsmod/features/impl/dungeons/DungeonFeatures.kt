@@ -459,7 +459,7 @@ object DungeonFeatures {
                 }
                 if (Skytils.config.hideNonStarredNametags) {
                     val name = event.entity.customNameTag.stripControlCodes()
-                    if (!name.startsWith("✯ ") && name.contains("❤") && dungeonMobSpawns.any { it in name }) {
+                    if (!entity.name.matches(Regex("^(?:.* )?§6✯ .+ .*§c❤$")) && dungeonMobSpawns.any { it in name }) {
                         mc.theWorld.removeEntity(event.entity)
                     }
                 }
