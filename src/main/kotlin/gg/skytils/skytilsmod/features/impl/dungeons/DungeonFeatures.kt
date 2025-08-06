@@ -459,7 +459,7 @@ object DungeonFeatures {
                 }
                 if (Skytils.config.hideNonStarredNametags) {
                     val name = event.entity.customNameTag.stripControlCodes()
-                    if (!entity.name.matches(Regex("^(?:.* )?§6✯ .+ .*§c❤$")) && dungeonMobSpawns.any { it in name }) {
+                    if (!name.takeWhile{!it.isLetter()}.contains("✯ ") && name.contains("❤") && dungeonMobSpawns.any { it in name }) {
                         mc.theWorld.removeEntity(event.entity)
                     }
                 }
@@ -513,7 +513,7 @@ object DungeonFeatures {
                 } else {
                     if (!hasBossSpawned && Skytils.config.boxStarredMobs && event.entity is EntityArmorStand && event.entity.hasCustomName() && event.entity.alwaysRenderNameTag) {
                         val name = event.entity.name
-                        if (name.startsWith("§6✯ ") && name.endsWith("§c❤")) {
+                        if (name.takeWhile{!it.isLetter()}.contains("✯ ") && name.endsWith("§c❤")) {
                             val (x, y, z) = RenderUtil.fixRenderPos(event.x, event.y, event.z)
                             val color = Skytils.config.boxStarredMobsColor
                             if ("Spider" in name) {
